@@ -31,4 +31,8 @@ public class EnumUtils {
 		implicit, refresh_token, password, authorization_code
 	}
 	
+	public enum RequiredFields{
+		email , userId , password,  roleId
+	}
+	
 }

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.shared.common.exception.RequestException;
 import com.shared.common.request.UserRequest;
 import com.shared.common.response.BaseResponse;
-import com.shared.common.response.UserResponse;
 
 /**
  * @author ROHIT
@@ -24,7 +23,17 @@ public interface UserController {
 	 * @return
 	 * @throws RequestException
 	 */
-	BaseResponse createUser(UserRequest userRequest, HttpServletRequest request, HttpServletResponse response)
+	BaseResponse save(UserRequest userRequest, HttpServletRequest request, HttpServletResponse response)
+			throws RequestException;
+	
+	/**
+	 * @param userRequest
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws RequestException
+	 */
+	BaseResponse login(UserRequest userRequest, HttpServletRequest request, HttpServletResponse response)
 			throws RequestException;
 
 	/**
@@ -34,7 +43,17 @@ public interface UserController {
 	 * @return
 	 * @throws RequestException
 	 */
-	UserResponse userById(String userId, HttpServletRequest request, HttpServletResponse response)
+	BaseResponse findById(Long userId, HttpServletRequest request, HttpServletResponse response)
+			throws RequestException;
+
+	/**
+	 * @param email
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws RequestException
+	 */
+	BaseResponse findByEmail(String email, HttpServletRequest request, HttpServletResponse response)
 			throws RequestException;
 
 }
