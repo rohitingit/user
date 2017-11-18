@@ -3,10 +3,8 @@
  */
 package com.ecc.user.dao.impl;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
-import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
