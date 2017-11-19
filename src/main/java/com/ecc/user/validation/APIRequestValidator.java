@@ -27,7 +27,7 @@ public class APIRequestValidator extends Validator {
 	public void validateSave(UserRequest userRequest) {
 		validateString(RequiredFields.email.name(), userRequest.getEmail());
 		validateString(RequiredFields.password.name(), userRequest.getEmail());
-		validateString(RequiredFields.roleId.name(), userRequest.getEmail());
+//		validateString(RequiredFields.roleId.name(), userRequest.getEmail());
 	}
 
 	public void validateLogin(UserRequest userRequest) {
