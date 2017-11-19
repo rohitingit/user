@@ -3,10 +3,9 @@
  */
 package com.ecc.user.service;
 
-import javax.ws.rs.NotFoundException;
-
 import com.ecc.user.entity.User;
 import com.shared.common.exception.BadRequestException;
+import com.shared.common.exception.NotFoundException;
 
 /**
  * @author ROHIT

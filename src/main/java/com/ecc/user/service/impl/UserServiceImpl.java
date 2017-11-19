@@ -4,7 +4,6 @@
 package com.ecc.user.service.impl;
 
 import javax.transaction.Transactional;
-import javax.ws.rs.NotFoundException;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
@@ -17,6 +16,7 @@ import com.ecc.user.entity.User;
 import com.ecc.user.locale.MessageByLocale;
 import com.ecc.user.service.UserService;
 import com.shared.common.exception.BadRequestException;
+import com.shared.common.exception.NotFoundException;
 
 /**
  * @author ROHIT
