@@ -5,6 +5,7 @@ package com.ecc.user.service;
 
 import com.ecc.user.entity.User;
 import com.shared.common.exception.BadRequestException;
+import com.shared.common.exception.ConflictException;
 import com.shared.common.exception.NotFoundException;
 
 /**
@@ -17,7 +18,7 @@ public interface UserService {
 	 * @param user
 	 * @return
 	 */
-	public Long save(User user) throws BadRequestException;
+	public Long save(User user) throws ConflictException;
 
 	/**
 	 * @param user

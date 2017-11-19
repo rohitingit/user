@@ -16,6 +16,7 @@ import com.ecc.user.entity.User;
 import com.ecc.user.locale.MessageByLocale;
 import com.ecc.user.service.UserService;
 import com.shared.common.exception.BadRequestException;
+import com.shared.common.exception.ConflictException;
 import com.shared.common.exception.NotFoundException;
 
 /**
@@ -35,11 +36,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public Long save(User user) throws BadRequestException{
+	public Long save(User user) throws ConflictException{
 		logger.info(" save ");
 		User existUser = userDAO.findByEmail(user.getEmail());
 		if (existUser != null) {
-			throw new BadRequestException(messageByLocale.getMessage("user.email.exist"));
+			throw new ConflictException(messageByLocale.getMessage("user.email.exist"));
 		}
 		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 		return userDAO.save(user);

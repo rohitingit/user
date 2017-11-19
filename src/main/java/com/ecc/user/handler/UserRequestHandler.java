@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.ecc.user.entity.User;
 import com.ecc.user.locale.MessageByLocale;
 import com.ecc.user.service.UserService;
+import com.shared.common.exception.NotFoundException;
 import com.shared.common.exception.RequestException;
 import com.shared.common.exception.UnauthorizedException;
 import com.shared.common.request.UserRequest;
@@ -61,7 +62,12 @@ public class UserRequestHandler extends BaseRequestHandler {
 	 */
 	public BaseResponse login(UserRequest userRequest) throws RequestException {
 		BaseResponse userResponse = new BaseResponse();
-		User user = userService.findByEmail(userRequest.getEmail());
+		User user = null;
+		try {
+			user = userService.findByEmail(userRequest.getEmail());
+		} catch (NotFoundException exception) {
+			throw new UnauthorizedException(messageByLocale.getMessage("login.failed"));
+		}
 		if (!BCrypt.checkpw(userRequest.getPassword(), user.getPassword())) {
 			throw new UnauthorizedException(messageByLocale.getMessage("login.failed"));
 		}
