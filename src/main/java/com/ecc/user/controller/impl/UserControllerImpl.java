@@ -86,7 +86,7 @@ public class UserControllerImpl extends AbstractControllerImpl implements UserCo
 	
 	@Override
 	@ResponseStatus(value = HttpStatus.OK)
-	@RequestMapping(value="/findByEmail/{email.+}", method=RequestMethod.GET)
+	@RequestMapping(value="/findByEmail/{email:.+}", method=RequestMethod.GET)
 	public BaseResponse findByEmail(@PathVariable("email") String email , HttpServletRequest request, HttpServletResponse response) throws RequestException{
 		logger.info(" findByEmail ");
 		APIRequestValidator apiRequestValidator = new APIRequestValidator(messageByLocale);
