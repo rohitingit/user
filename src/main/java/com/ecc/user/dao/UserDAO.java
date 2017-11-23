@@ -15,7 +15,7 @@ public interface UserDAO {
 	 * @param user
 	 * @return
 	 */
-	public Long save(User user);
+	public User save(User user);
 
 	/**
 	 * @param userId
@@ -29,9 +29,4 @@ public interface UserDAO {
 	 */
 	public User findByEmail(String email);
 
-	/**
-	 * @param user
-	 * @return
-	 */
-	public User update(User user);
 }

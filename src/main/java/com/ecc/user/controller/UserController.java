@@ -15,6 +15,16 @@ import com.shared.common.response.BaseResponse;
  *
  */
 public interface UserController {
+	
+	/**
+	 * @param userRequest
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws RequestException
+	 */
+	BaseResponse signUp(UserRequest userRequest, HttpServletRequest request, HttpServletResponse response)
+			throws RequestException;
 
 	/**
 	 * @param userRequest

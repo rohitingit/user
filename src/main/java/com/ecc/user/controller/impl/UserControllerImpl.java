@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecc.user.controller.UserController;
-import com.ecc.user.handler.UserRequestHandler;
 import com.ecc.user.locale.MessageByLocale;
+import com.ecc.user.service.LoginService;
+import com.ecc.user.service.UserService;
 import com.ecc.user.util.EnumUtils.RequiredFields;
 import com.ecc.user.validation.APIRequestValidator;
 import com.shared.common.exception.BadRequestException;
@@ -35,66 +36,88 @@ import com.shared.common.response.BaseResponse;
 public class UserControllerImpl extends AbstractControllerImpl implements UserController {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Autowired
 	private MessageByLocale messageByLocale;
-	
+
 	@Autowired
-	private UserRequestHandler userRequestHandler; 
-	
+	private LoginService loginService;
+
+	@Autowired
+	private UserService userService;
+
 	@Override
 	@ResponseStatus(value = HttpStatus.CREATED)
-	@RequestMapping(method=RequestMethod.POST)
-	public BaseResponse save(@RequestBody UserRequest userRequest, HttpServletRequest request, HttpServletResponse response) throws RequestException{
-		logger.info(" save ");
+	@RequestMapping(method = RequestMethod.POST)
+	public BaseResponse signUp(@RequestBody UserRequest userRequest, HttpServletRequest request,
+			HttpServletResponse response) throws RequestException {
+		logger.info(" signUp ");
 		APIRequestValidator apiRequestValidator = new APIRequestValidator(messageByLocale);
 		apiRequestValidator.validateSave(userRequest);
-		if (apiRequestValidator.hasErrors()) {	
-		    String errorString = apiRequestValidator.getErrors();
+		if (apiRequestValidator.hasErrors()) {
+			String errorString = apiRequestValidator.getErrors();
 			throw new BadRequestException(errorString);
 		}
-		return userRequestHandler.save(userRequest);
+		return loginService.save(userRequest);
 	}
-	
+
 	@Override
 	@ResponseStatus(value = HttpStatus.OK)
-	@RequestMapping(value="/{userId}", method=RequestMethod.GET)
-	public BaseResponse findById(@PathVariable("userId") Long userId , HttpServletRequest request, HttpServletResponse response) throws RequestException{
-		logger.info(" findById ");
-		APIRequestValidator apiRequestValidator = new APIRequestValidator(messageByLocale);
-		apiRequestValidator.validateLong(RequiredFields.userId.name(), userId);
-		if (apiRequestValidator.hasErrors()) {	
-		    String errorString = apiRequestValidator.getErrors();
-			throw new BadRequestException(errorString);
-		}
-		return userRequestHandler.findById(userId);
-	}
-	
-	@Override
-	@ResponseStatus(value = HttpStatus.OK)
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public BaseResponse login(@RequestBody UserRequest userRequest , HttpServletRequest request, HttpServletResponse response) throws RequestException{
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public BaseResponse login(@RequestBody UserRequest userRequest, HttpServletRequest request,
+			HttpServletResponse response) throws RequestException {
 		logger.info(" login ");
 		APIRequestValidator apiRequestValidator = new APIRequestValidator(messageByLocale);
 		apiRequestValidator.validateLogin(userRequest);
-		if (apiRequestValidator.hasErrors()) {	
-		    String errorString = apiRequestValidator.getErrors();
+		if (apiRequestValidator.hasErrors()) {
+			String errorString = apiRequestValidator.getErrors();
 			throw new BadRequestException(errorString);
 		}
-		return userRequestHandler.login(userRequest);
+		return loginService.validate(userRequest.getEmail(), userRequest.getPassword());
 	}
-	
+
 	@Override
 	@ResponseStatus(value = HttpStatus.OK)
-	@RequestMapping(value="/findByEmail/{email:.+}", method=RequestMethod.GET)
-	public BaseResponse findByEmail(@PathVariable("email") String email , HttpServletRequest request, HttpServletResponse response) throws RequestException{
+	@RequestMapping(method = RequestMethod.PUT)
+	public BaseResponse save(@RequestBody UserRequest userRequest, HttpServletRequest request,
+			HttpServletResponse response) throws RequestException {
+		logger.info(" save ");
+		APIRequestValidator apiRequestValidator = new APIRequestValidator(messageByLocale);
+		apiRequestValidator.validateSave(userRequest);
+		if (apiRequestValidator.hasErrors()) {
+			String errorString = apiRequestValidator.getErrors();
+			throw new BadRequestException(errorString);
+		}
+		return userService.save(userRequest);
+	}
+
+	@Override
+	@ResponseStatus(value = HttpStatus.OK)
+	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+	public BaseResponse findById(@PathVariable("userId") Long userId, HttpServletRequest request,
+			HttpServletResponse response) throws RequestException {
+		logger.info(" findById ");
+		APIRequestValidator apiRequestValidator = new APIRequestValidator(messageByLocale);
+		apiRequestValidator.validateLong(RequiredFields.userId.name(), userId);
+		if (apiRequestValidator.hasErrors()) {
+			String errorString = apiRequestValidator.getErrors();
+			throw new BadRequestException(errorString);
+		}
+		return userService.findById(userId);
+	}
+
+	@Override
+	@ResponseStatus(value = HttpStatus.OK)
+	@RequestMapping(value = "/findByEmail/{email:.+}", method = RequestMethod.GET)
+	public BaseResponse findByEmail(@PathVariable("email") String email, HttpServletRequest request,
+			HttpServletResponse response) throws RequestException {
 		logger.info(" findByEmail ");
 		APIRequestValidator apiRequestValidator = new APIRequestValidator(messageByLocale);
 		apiRequestValidator.validateString(RequiredFields.email.name(), email);
-		if (apiRequestValidator.hasErrors()) {	
-		    String errorString = apiRequestValidator.getErrors();
+		if (apiRequestValidator.hasErrors()) {
+			String errorString = apiRequestValidator.getErrors();
 			throw new BadRequestException(errorString);
 		}
-		return userRequestHandler.findByEmail(email);
+		return userService.findByEmail(email);
 	}
 }

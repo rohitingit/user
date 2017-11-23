@@ -1,253 +1,289 @@
-/**
- * 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package com.ecc.user.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * @author Rohit
  *
+ * @author Rohit
  */
-@Entity()
+@Entity
 @Table(name = "`user`")
+@XmlRootElement
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "middle_name")
+    private String middleName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "mobile_no")
+    private String mobileNo;
+    @Column(name = "dob")
+    @Temporal(TemporalType.DATE)
+    private Date dob;
+    @Column(name = "gender")
+    private String gender;
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
+    @Basic(optional = false)
+    @Column(name = "is_email_verified")
+    private boolean isEmailVerified;
+    @Basic(optional = false)
+    @Column(name = "is_mobile_verified")
+    private boolean isMobileVerified;
+    @Column(name = "signup_stage")
+    private String signupStage;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "tz_offset")
+    private Long tzOffset;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    @Column(name = "modified_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private List<Qualification> qualificationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private List<Document> documentList;
+    @OneToOne
+    @JoinColumn(name = "login_id", referencedColumnName = "id")
+    private Login login;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private List<Certification> certificationList;
 
-	@GenericGenerator(name = "userSeq", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "user_id_seq"),
-			@Parameter(name = "initial_value", value = "1"), @Parameter(name = "increment_size", value = "1") })
-	@Id
-	@GeneratedValue(generator = "userSeq", strategy = GenerationType.SEQUENCE)
-	private Long id;
+    public User() {
+    }
 
-	private String firstName;
+    public User(Long id) {
+        this.id = id;
+    }
 
-	private String middleName;
+    public User(Long id, boolean isEmailVerified, boolean isMobileVerified) {
+        this.id = id;
+        this.isEmailVerified = isEmailVerified;
+        this.isMobileVerified = isMobileVerified;
+    }
 
-	private String lastName;
+    public Long getId() {
+        return id;
+    }
 
-	private String email;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	private String mobileNo;
+    public String getFirstName() {
+        return firstName;
+    }
 
-	private String password;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	@Temporal(TemporalType.DATE)
-	private Date dob;
+    public String getMiddleName() {
+        return middleName;
+    }
 
-	private Long roleId;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
-	private String gender;
+    public String getLastName() {
+        return lastName;
+    }
 
-	private String profileImageUrl;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	private Boolean isEmailVerified;
+    public String getEmail() {
+        return email;
+    }
 
-	private Boolean isMobileVerified;
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	private String signupStage;
+    public String getMobileNo() {
+        return mobileNo;
+    }
 
-	private String status;
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
 
-	private Long tzOffset;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
+    public Date getDob() {
+        return dob;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modifiedDate;
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 
-	public String getMiddleName() {
-		return middleName;
-	}
+    public boolean getIsEmailVerified() {
+        return isEmailVerified;
+    }
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
+    public void setIsEmailVerified(boolean isEmailVerified) {
+        this.isEmailVerified = isEmailVerified;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public boolean getIsMobileVerified() {
+        return isMobileVerified;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setIsMobileVerified(boolean isMobileVerified) {
+        this.isMobileVerified = isMobileVerified;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getSignupStage() {
+        return signupStage;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setSignupStage(String signupStage) {
+        this.signupStage = signupStage;
+    }
 
-	public String getMobileNo() {
-		return mobileNo;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setMobileNo(String mobileNo) {
-		this.mobileNo = mobileNo;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public Long getTzOffset() {
+        return tzOffset;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setTzOffset(Long tzOffset) {
+        this.tzOffset = tzOffset;
+    }
 
-	public Date getDob() {
-		return dob;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public Long getRoleId() {
-		return roleId;
-	}
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    @XmlTransient
+    public List<Qualification> getQualificationList() {
+        return qualificationList;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public void setQualificationList(List<Qualification> qualificationList) {
+        this.qualificationList = qualificationList;
+    }
 
-	public String getProfileImageUrl() {
-		return profileImageUrl;
-	}
+    @XmlTransient
+    public List<Document> getDocumentList() {
+        return documentList;
+    }
 
-	public void setProfileImageUrl(String profileImageUrl) {
-		this.profileImageUrl = profileImageUrl;
-	}
+    public void setDocumentList(List<Document> documentList) {
+        this.documentList = documentList;
+    }
 
-	public Boolean getIsEmailVerified() {
-		return isEmailVerified;
-	}
+    public Login getLogin() {
+        return login;
+    }
 
-	public void setIsEmailVerified(Boolean isEmailVerified) {
-		this.isEmailVerified = isEmailVerified;
-	}
+    public void setLogin(Login login) {
+        this.login = login;
+    }
 
-	public Boolean getIsMobileVerified() {
-		return isMobileVerified;
-	}
+    @XmlTransient
+    public List<Certification> getCertificationList() {
+        return certificationList;
+    }
 
-	public void setIsMobileVerified(Boolean isMobileVerified) {
-		this.isMobileVerified = isMobileVerified;
-	}
+    public void setCertificationList(List<Certification> certificationList) {
+        this.certificationList = certificationList;
+    }
 
-	public String getSignupStage() {
-		return signupStage;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
 
-	public void setSignupStage(String signupStage) {
-		this.signupStage = signupStage;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof User)) {
+            return false;
+        }
+        User other = (User) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Long getTzOffset() {
-		return tzOffset;
-	}
-
-	public void setTzOffset(Long tzOffset) {
-		this.tzOffset = tzOffset;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", middleNname=" + middleName + ", lastName=" + lastName
-				+ ", email=" + email + ", mobileNo=" + mobileNo + ", password=" + password + ", dob=" + dob
-				+ ", roleId=" + roleId + ", gender=" + gender + ", profileImageUrl=" + profileImageUrl
-				+ ", isEmailVerified=" + isEmailVerified + ", isMobileVerified=" + isMobileVerified + ", signupStage="
-				+ signupStage + ", status=" + status + ", tzOffset=" + tzOffset + ", createdDate=" + createdDate
-				+ ", modifiedDate=" + modifiedDate + "]";
-	}
-
+    @Override
+    public String toString() {
+        return "com.ecc.user.entity.User[ id=" + id + " ]";
+    }
+    
 }

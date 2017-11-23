@@ -3,40 +3,35 @@
  */
 package com.ecc.user.service;
 
-import com.ecc.user.entity.User;
-import com.shared.common.exception.BadRequestException;
-import com.shared.common.exception.ConflictException;
 import com.shared.common.exception.NotFoundException;
+import com.shared.common.exception.RequestException;
+import com.shared.common.request.UserRequest;
+import com.shared.common.response.BaseResponse;
 
 /**
  * @author ROHIT
  *
  */
-public interface UserService {
+public interface UserService extends BaseApiService{
 
 	/**
-	 * @param user
+	 * @param userRequest
 	 * @return
 	 */
-	public Long save(User user) throws ConflictException;
-
-	/**
-	 * @param user
-	 */
-	public void update(User user);
+	public BaseResponse save(UserRequest userRequest) throws RequestException;
 
 	/**
 	 * @param userId
 	 * @return
 	 * @throws NotFoundException
 	 */
-	public User findById(Long userId) throws NotFoundException;
-	
+	public BaseResponse findById(Long userId) throws NotFoundException;
+
 	/**
 	 * @param email
 	 * @return
 	 * @throws NotFoundException
 	 */
-	public User findByEmail(String email) throws NotFoundException;
+	public BaseResponse findByEmail(String email) throws NotFoundException;
 
 }

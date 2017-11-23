@@ -24,10 +24,14 @@ public class APIRequestValidator extends Validator {
 		super(messageByLocale);
 	}
 
-	public void validateSave(UserRequest userRequest) {
+	public void validateSignUp(UserRequest userRequest) {
 		validateString(RequiredFields.email.name(), userRequest.getEmail());
 		validateString(RequiredFields.password.name(), userRequest.getEmail());
-//		validateString(RequiredFields.roleId.name(), userRequest.getEmail());
+		validateLong(RequiredFields.roleId.name(), userRequest.getRoleId());
+	}
+
+	public void validateSave(UserRequest userRequest) {
+		validateString(RequiredFields.email.name(), userRequest.getEmail());
 	}
 
 	public void validateLogin(UserRequest userRequest) {
