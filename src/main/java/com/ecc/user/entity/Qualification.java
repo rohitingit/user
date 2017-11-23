@@ -33,225 +33,228 @@ import org.hibernate.annotations.Parameter;
 @XmlRootElement
 public class Qualification implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	@GenericGenerator(name = "qualificationSeq", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
-			@Parameter(name = "sequence_name", value = "qualifications_id_seq"), @Parameter(name = "initial_value", value = "1"),
-			@Parameter(name = "increment_size", value = "1") })
+			@Parameter(name = "sequence_name", value = "qualifications_id_seq"),
+			@Parameter(name = "initial_value", value = "1"), @Parameter(name = "increment_size", value = "1") })
 	@Id
 	@GeneratedValue(generator = "qualificationSeq", strategy = GenerationType.SEQUENCE)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Long id;
-    @Basic(optional = false)
-    @Column(name = "qualification")
-    private String qualification;
-    @Basic(optional = false)
-    @Column(name = "specialization")
-    private String specialization;
-    @Basic(optional = false)
-    @Column(name = "institute")
-    private String institute;
-    @Basic(optional = false)
-    @Column(name = "institute_name")
-    private String instituteName;
-    @Basic(optional = false)
-    @Column(name = "obtain_marks")
-    private int obtainMarks;
-    @Basic(optional = false)
-    @Column(name = "total_marks")
-    private int totalMarks;
-    @Basic(optional = false)
-    @Column(name = "percentage")
-    private int percentage;
-    @Basic(optional = false)
-    @Column(name = "addmission_date")
-    @Temporal(TemporalType.DATE)
-    private Date addmissionDate;
-    @Basic(optional = false)
-    @Column(name = "complition_date")
-    @Temporal(TemporalType.DATE)
-    private Date complitionDate;
-    @Basic(optional = false)
-    @Column(name = "is_active")
-    private boolean isActive;
-    @Basic(optional = false)
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-    @Column(name = "modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedDate;
-    @Column(name = "attachment_url")
-    private String attachmentUrl;
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User userId;
+	@Basic(optional = false)
+	@Column(name = "id")
+	private Long id;
+	@Basic(optional = false)
+	@Column(name = "qualification")
+	private String qualification;
+	@Basic(optional = false)
+	@Column(name = "specialization")
+	private String specialization;
+	@Basic(optional = false)
+	@Column(name = "institute")
+	private String institute;
+	@Basic(optional = false)
+	@Column(name = "institute_name")
+	private String instituteName;
+	@Basic(optional = false)
+	@Column(name = "obtain_marks")
+	private int obtainMarks;
+	@Basic(optional = false)
+	@Column(name = "total_marks")
+	private int totalMarks;
+	@Basic(optional = false)
+	@Column(name = "percentage")
+	private double percentage;
+	@Basic(optional = false)
+	@Column(name = "admission_date")
+	@Temporal(TemporalType.DATE)
+	private Date admissionDate;
+	@Basic(optional = false)
+	@Column(name = "complition_date")
+	@Temporal(TemporalType.DATE)
+	private Date complitionDate;
+	@Basic(optional = false)
+	@Column(name = "is_active")
+	private boolean isActive;
+	@Basic(optional = false)
+	@Column(name = "created_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+	@Column(name = "modified_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifiedDate;
+	@Column(name = "attachment_url")
+	private String attachmentUrl;
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@ManyToOne(optional = false)
+	private User userId;
 
-    public Qualification() {
-    }
+	public Qualification() {
+	}
 
-    public Qualification(Long id) {
-        this.id = id;
-    }
+	public Qualification(Long id) {
+		this.id = id;
+	}
 
-    public Qualification(Long id, String qualification, String specialization, String institute, String instituteName, int obtainMarks, int totalMarks, int percentage, Date addmissionDate, Date complitionDate, boolean isActive, Date createdDate) {
-        this.id = id;
-        this.qualification = qualification;
-        this.specialization = specialization;
-        this.institute = institute;
-        this.instituteName = instituteName;
-        this.obtainMarks = obtainMarks;
-        this.totalMarks = totalMarks;
-        this.percentage = percentage;
-        this.addmissionDate = addmissionDate;
-        this.complitionDate = complitionDate;
-        this.isActive = isActive;
-        this.createdDate = createdDate;
-    }
+	public Qualification(Long id, String qualification, String specialization, String institute, String instituteName,
+			int obtainMarks, int totalMarks, int percentage, Date admissionDate, Date complitionDate, boolean isActive,
+			Date createdDate) {
+		this.id = id;
+		this.qualification = qualification;
+		this.specialization = specialization;
+		this.institute = institute;
+		this.instituteName = instituteName;
+		this.obtainMarks = obtainMarks;
+		this.totalMarks = totalMarks;
+		this.percentage = percentage;
+		this.admissionDate = admissionDate;
+		this.complitionDate = complitionDate;
+		this.isActive = isActive;
+		this.createdDate = createdDate;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getQualification() {
-        return qualification;
-    }
+	public String getQualification() {
+		return qualification;
+	}
 
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-    }
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
+	}
 
-    public String getSpecialization() {
-        return specialization;
-    }
+	public String getSpecialization() {
+		return specialization;
+	}
 
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
+	public void setSpecialization(String specialization) {
+		this.specialization = specialization;
+	}
 
-    public String getInstitute() {
-        return institute;
-    }
+	public String getInstitute() {
+		return institute;
+	}
 
-    public void setInstitute(String institute) {
-        this.institute = institute;
-    }
+	public void setInstitute(String institute) {
+		this.institute = institute;
+	}
 
-    public String getInstituteName() {
-        return instituteName;
-    }
+	public String getInstituteName() {
+		return instituteName;
+	}
 
-    public void setInstituteName(String instituteName) {
-        this.instituteName = instituteName;
-    }
+	public void setInstituteName(String instituteName) {
+		this.instituteName = instituteName;
+	}
 
-    public int getObtainMarks() {
-        return obtainMarks;
-    }
+	public int getObtainMarks() {
+		return obtainMarks;
+	}
 
-    public void setObtainMarks(int obtainMarks) {
-        this.obtainMarks = obtainMarks;
-    }
+	public void setObtainMarks(int obtainMarks) {
+		this.obtainMarks = obtainMarks;
+	}
 
-    public int getTotalMarks() {
-        return totalMarks;
-    }
+	public int getTotalMarks() {
+		return totalMarks;
+	}
 
-    public void setTotalMarks(int totalMarks) {
-        this.totalMarks = totalMarks;
-    }
+	public void setTotalMarks(int totalMarks) {
+		this.totalMarks = totalMarks;
+	}
 
-    public int getPercentage() {
-        return percentage;
-    }
+	public double getPercentage() {
+		return percentage;
+	}
 
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
-    }
+	public void setPercentage(double percentage) {
+		this.percentage = percentage;
+	}
 
-    public Date getAddmissionDate() {
-        return addmissionDate;
-    }
+	public Date getAdmissionDate() {
+		return admissionDate;
+	}
 
-    public void setAddmissionDate(Date addmissionDate) {
-        this.addmissionDate = addmissionDate;
-    }
+	public void setAdmissionDate(Date admissionDate) {
+		this.admissionDate = admissionDate;
+	}
 
-    public Date getComplitionDate() {
-        return complitionDate;
-    }
+	public Date getComplitionDate() {
+		return complitionDate;
+	}
 
-    public void setComplitionDate(Date complitionDate) {
-        this.complitionDate = complitionDate;
-    }
+	public void setComplitionDate(Date complitionDate) {
+		this.complitionDate = complitionDate;
+	}
 
-    public boolean getIsActive() {
-        return isActive;
-    }
+	public boolean getIsActive() {
+		return isActive;
+	}
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
+	public void setIsActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
+	public Date getCreatedDate() {
+		return createdDate;
+	}
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
 
-    public String getAttachmentUrl() {
-        return attachmentUrl;
-    }
+	public String getAttachmentUrl() {
+		return attachmentUrl;
+	}
 
-    public void setAttachmentUrl(String attachmentUrl) {
-        this.attachmentUrl = attachmentUrl;
-    }
+	public void setAttachmentUrl(String attachmentUrl) {
+		this.attachmentUrl = attachmentUrl;
+	}
 
-    public User getUserId() {
-        return userId;
-    }
+	public User getUserId() {
+		return userId;
+	}
 
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
+	public void setUserId(User userId) {
+		this.userId = userId;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Qualification)) {
-            return false;
-        }
-        Qualification other = (Qualification) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof Qualification)) {
+			return false;
+		}
+		Qualification other = (Qualification) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "com.ecc.user.entity.Qualification[ id=" + id + " ]";
-    }
-    
+	@Override
+	public String toString() {
+		return "com.ecc.user.entity.Qualification[ id=" + id + " ]";
+	}
+
 }
