@@ -3,6 +3,8 @@
  */
 package com.ecc.user.service.impl;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -11,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.ecc.user.dao.LoginDAO;
 import com.ecc.user.dao.UserDAO;
+import com.ecc.user.entity.Login;
 import com.ecc.user.entity.User;
 import com.ecc.user.locale.MessageByLocale;
 import com.ecc.user.service.UserService;
@@ -34,6 +38,9 @@ public class UserServiceImpl implements UserService {
 	private MessageByLocale messageByLocale;
 
 	@Autowired
+	private LoginDAO loginDAO;
+
+	@Autowired
 	private UserDAO userDAO;
 
 	@Override
@@ -41,15 +48,23 @@ public class UserServiceImpl implements UserService {
 	public BaseResponse save(UserRequest userRequest) throws RequestException {
 		logger.info(" save ");
 		UserResponse userResponse = new UserResponse();
-		User pesistUser = null;
-		try {
-			pesistUser = userDAO.findByEmail(userRequest.getEmail());
-			return converUserEntityToResponse(userDAO.save(pesistUser));
-		} catch (Exception e) {
-			logger.debug("user not exist");
+		Login login = null;
+		User user = null;
+		login = loginDAO.findByEmail(userRequest.getEmail());
+		if (login == null) {
+			throw new NotFoundException(messageByLocale.getMessage("user.not.found"));
 		}
-		pesistUser = userDAO.save(converUserRequestToEntity(userRequest));
-		userResponse = converUserEntityToResponse(pesistUser);
+		user = userDAO.findByEmail(userRequest.getEmail());
+		if (user == null) {/** create user **/
+			user = convertUserRequestToEntity(userRequest);
+			user.setCreatedDate(new Date());
+		} else {/** update user **/
+			user = updatedUserEntity(user, userRequest);
+		}
+		user.setModifiedDate(new Date());
+		user.setLogin(login);
+		user = userDAO.save(user);
+		userResponse = convertUserEntityToResponse(user);
 		return userResponse;
 	}
 
@@ -62,7 +77,7 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			throw new NotFoundException(messageByLocale.getMessage("user.not.found"));
 		}
-		userResponse = converUserEntityToResponse(user);
+		userResponse = convertUserEntityToResponse(user);
 		userResponse.setStatus(HttpStatus.OK.value());
 		return userResponse;
 	}
@@ -76,7 +91,7 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			throw new NotFoundException(messageByLocale.getMessage("user.not.found"));
 		}
-		userResponse = converUserEntityToResponse(user);
+		userResponse = convertUserEntityToResponse(user);
 		userResponse.setStatus(HttpStatus.OK.value());
 		return userResponse;
 	}

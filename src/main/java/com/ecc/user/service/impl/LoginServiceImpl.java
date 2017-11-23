@@ -51,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 		if (existLogin != null) {
 			throw new ConflictException(messageByLocale.getMessage("user.email.exist"));
 		}
-		Login login = converUserRequestToLoginEntity(userRequest);
+		Login login = convertUserRequestToLoginEntity(userRequest);
 		login.setPassword(BCrypt.hashpw(userRequest.getPassword(), BCrypt.gensalt()));
 		loginDAO.save(login);
 		userResponse.setStatus(HttpStatus.CREATED.value());
@@ -73,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
 		}
 		User user = userDAO.findByEmail(login.getEmail());
 		if (user != null) {
-			userResponse = converUserEntityToResponse(user);
+			userResponse = convertUserEntityToResponse(user);
 		}
 		userResponse.setStatus(HttpStatus.OK.value());
 		userResponse.setResponseMessage(messageByLocale.getMessage("login.success"));
