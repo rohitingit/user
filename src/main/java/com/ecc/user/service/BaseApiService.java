@@ -4,7 +4,9 @@
 package com.ecc.user.service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.ecc.user.entity.Certification;
 import com.ecc.user.entity.Document;
@@ -17,6 +19,9 @@ import com.shared.common.request.CertificationRequest;
 import com.shared.common.request.DocumentRequest;
 import com.shared.common.request.QualificationRequest;
 import com.shared.common.request.UserRequest;
+import com.shared.common.response.CertificationResponse;
+import com.shared.common.response.DocumentResponse;
+import com.shared.common.response.QualificationResponse;
 import com.shared.common.response.UserResponse;
 import com.shared.common.util.Utils;
 
@@ -82,7 +87,115 @@ public interface BaseApiService {
 		userResponse.setEmail(user.getEmail());
 		userResponse.setMobileNo(user.getMobileNo());
 		userResponse.setTzOffset(user.getTzOffset());
+		userResponse.setCreatedDate(user.getCreatedDate());
+		userResponse.setModifiedDate(user.getModifiedDate());
+		userResponse.setProfileImageUrl(user.getProfileImageUrl());
+		userResponse.setSignupStage(user.getSignupStage());
+		userResponse.setProfileStatus(user.getStatus());
+		if (Utils.isPresent(user.getCertificationList())) {
+			userResponse.setCertifications(convertCertificationEntityToResponse(user.getCertificationList()));
+		}
+		if (Utils.isPresent(user.getDocumentList())) {
+			userResponse.setDocuments(convertDocumentEntityResponse(user.getDocumentList()));
+		}
+		if (Utils.isPresent(user.getQualificationList())) {
+			userResponse.setQualifications(convertQualificationEntityToResponse(user.getQualificationList()));
+		}
 		return userResponse;
+	}
+
+	/**
+	 * @param certifications
+	 * @return
+	 */
+	public default List<CertificationResponse> convertCertificationEntityToResponse(
+			List<Certification> certifications) {
+		List<CertificationResponse> certificationResponses = new ArrayList<>();
+		for (Certification certification : certifications) {
+			certificationResponses.add(convertCertificationEntityToResponse(certification));
+		}
+		return certificationResponses;
+	}
+
+	/**
+	 * @param certification
+	 * @return
+	 */
+	public default CertificationResponse convertCertificationEntityToResponse(Certification certification) {
+		CertificationResponse certificationResponse = new CertificationResponse();
+		certificationResponse.setId(certification.getId());
+		certificationResponse.setUserId(certification.getUserId().getId());
+		certificationResponse.setName(certification.getName());
+		certificationResponse.setTitle(certification.getTitle());
+		certificationResponse.setIsActive(certification.getIsActive());
+		certificationResponse.setAttachmentUrl(certification.getAttachmentUrl());
+		certificationResponse.setCreatedDate(certification.getCreatedDate());
+		certificationResponse.setModifiedDate(certification.getModifiedDate());
+		return certificationResponse;
+	}
+
+	/**
+	 * @param documents
+	 * @return
+	 */
+	public default List<DocumentResponse> convertDocumentEntityResponse(List<Document> documents) {
+		List<DocumentResponse> documentResponses = new ArrayList<DocumentResponse>();
+		for (Document document : documents) {
+			documentResponses.add(convertDocumentEntityResponse(document));
+		}
+		return documentResponses;
+	}
+
+	/**
+	 * @param documentRequest
+	 * @return
+	 */
+	public default DocumentResponse convertDocumentEntityResponse(Document document) {
+		DocumentResponse documentResponse = new DocumentResponse();
+		documentResponse.setId(document.getId());
+		documentResponse.setUserId(document.getUserId().getId());
+		documentResponse.setTypeId(document.getTypeId().getId());
+		documentResponse.setIsActive(document.getIsActive());
+		documentResponse.setAttachmentUrl(document.getAttachmentUrl());
+		documentResponse.setCreatedDate(document.getCreatedDate());
+		documentResponse.setModifiedDate(document.getModifiedDate());
+		return documentResponse;
+	}
+
+	/**
+	 * @param qualifications
+	 * @return
+	 */
+	public default List<QualificationResponse> convertQualificationEntityToResponse(
+			List<Qualification> qualifications) {
+		List<QualificationResponse> qualificationResponses = new ArrayList<>();
+		for (Qualification qualification : qualifications) {
+			qualificationResponses.add(convertQualificationEntityToResponse(qualification));
+		}
+		return qualificationResponses;
+	}
+
+	/**
+	 * @param qualification
+	 * @return
+	 */
+	public default QualificationResponse convertQualificationEntityToResponse(Qualification qualification) {
+		QualificationResponse qualificationResponse = new QualificationResponse();
+		qualificationResponse.setId(qualification.getId());
+		qualificationResponse.setUserId(qualification.getUserId().getId());
+		qualificationResponse.setInstitute(qualification.getInstitute());
+		qualificationResponse.setInstituteName(qualification.getInstituteName());
+		qualificationResponse.setAdmissionDate(qualification.getAdmissionDate());
+		qualificationResponse.setComplitionDate(qualification.getComplitionDate());
+		qualificationResponse.setObtainMarks(qualification.getObtainMarks());
+		qualificationResponse.setTotalMarks(qualification.getTotalMarks());
+		qualificationResponse.setPercentage(qualification.getPercentage());
+		qualificationResponse.setSpecialization(qualification.getSpecialization());
+		qualificationResponse.setIsActive(qualification.getIsActive());
+		qualificationResponse.setAttachmentUrl(qualification.getAttachmentUrl());
+		qualificationResponse.setCreatedDate(qualification.getCreatedDate());
+		qualificationResponse.setModifiedDate(qualification.getModifiedDate());
+		return qualificationResponse;
 	}
 
 	/**
