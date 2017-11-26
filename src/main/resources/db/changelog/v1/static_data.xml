@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="Rohit-20171126-17" author="Rohit">
+		<sqlFile path="./static_data/role_permission.sql"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+<!-- 	<changeSet id="Rohit-20171126-18" author="Rohit">
+		<sqlFile path="./static_data/type_metadata.sql"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	<changeSet id="Rohit-20171126-19" author="Rohit">
+		<sqlFile path="./static_data/type_data.sql"
+			relativeToChangelogFile="true" />
+	</changeSet>
+ -->
+</databaseChangeLog>
